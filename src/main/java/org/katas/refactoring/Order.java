@@ -14,28 +14,16 @@ public class Order {
         this.lineItems = lineItems;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getCustomerAddress() {
-        return customerAddress;
-    }
-
-    public List<LineItem> getLineItems() {
-        return lineItems;
-    }
-
 	public String receipt() {
 		StringBuilder output = new StringBuilder();
 		output.append("======Printing Orders======\n");
 
-        output.append(getCustomerName());
-        output.append(getCustomerAddress());
+        output.append(customerName);
+        output.append(customerAddress);
 
 		double totalSalesTax = 0d;
 		double total = 0d;
-		for (LineItem lineItem : getLineItems()) {
+		for (LineItem lineItem : lineItems) {
 			output.append(lineItem.getDescription());
 			output.append('\t');
 			output.append(lineItem.getPrice());
