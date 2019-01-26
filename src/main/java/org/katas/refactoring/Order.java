@@ -21,8 +21,6 @@ public class Order {
         output.append(customerName);
         output.append(customerAddress);
 
-		double totalSalesTax = 0d;
-		double total = 0d;
 		for (LineItem lineItem : lineItems) {
 			output.append(lineItem.getDescription());
 			output.append('\t');
@@ -32,16 +30,29 @@ public class Order {
 			output.append('\t');
 			output.append(lineItem.totalAmount());
 			output.append('\n');
-
-            double salesTax = lineItem.totalAmount() * taxRate;
-            totalSalesTax += salesTax;
-
-            total += lineItem.totalAmount() + salesTax;
 		}
+		output.append("Sales Tax").append('\t').append(getTotalSalesTax());
 
-		output.append("Sales Tax").append('\t').append(totalSalesTax);
-
-		output.append("Total Amount").append('\t').append(total);
+		output.append("Total Amount").append('\t').append(getTotalAmountAndTax());
 		return output.toString();
+	}
+
+	private double getTotalAmountAndTax() {
+		double salesTax;
+		double totalAmountAndTax = 0;
+		for (LineItem lineItem : lineItems) {
+			salesTax = lineItem.totalAmount() * taxRate;
+			totalAmountAndTax += lineItem.totalAmount() + salesTax;
+		}
+		return totalAmountAndTax;
+	}
+
+	private double getTotalSalesTax() {
+		double totalSalesTax = 0;
+		for (LineItem lineItem : lineItems) {
+			double salesTax = lineItem.totalAmount() * taxRate;
+            totalSalesTax += salesTax;
+		} 
+		return totalSalesTax;
 	}
 }
